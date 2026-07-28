@@ -41,7 +41,15 @@ export default function Dashboard() {
               padding: "20px",
             }}
           >
-            <div style={{ color: "#94a3b8" }}>{item.score >= 50 ? `الفرصة رقم ${index + 1}` : "مراقبة فقط"}</div>
+            <div style={{ color: "#94a3b8" }}>
+              {item.score >= 80
+                ? `فرصة قوية رقم ${index + 1}`
+                : item.score >= 60
+                ? `فرصة جيدة رقم ${index + 1}`
+                : item.score >= 40
+                ? "مراقبة"
+                : "ضعيفة"}
+            </div>
             <h2 style={{ margin: "12px 0 6px" }}>{item.symbol}</h2>
             <div style={{ color: "#38bdf8" }}>
               WaveScore: {item.score}% — {item.reasons.join(" + ")}
