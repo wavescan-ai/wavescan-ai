@@ -1,8 +1,31 @@
 import { rankOpportunities } from "@/lib/opportunity-engine";
 import { mockMarketData } from "@/lib/mock-market-data";
 
+const mockNews = [
+  {
+    title: "تحديث إيجابي مرتبط بتسلا",
+    symbol: "TSLA",
+    impact: "إيجابي",
+    score: 9,
+  },
+  {
+    title: "خبر تقني مؤثر على إنفيديا",
+    symbol: "NVDA",
+    impact: "إيجابي",
+    score: 8,
+  },
+  {
+    title: "خبر محدود التأثير على أبل",
+    symbol: "AAPL",
+    impact: "محايد",
+    score: 5,
+  },
+];
+
+
 export default function Dashboard() {
   const opportunities = rankOpportunities(mockMarketData);
+  const topNews = [...mockNews].sort((a, b) => b.score - a.score)[0];
 
   return (
     <main
@@ -79,8 +102,9 @@ export default function Dashboard() {
             }}
           >
             <div style={{ color: "#94a3b8" }}>الأخبار المؤثرة</div>
-            <h2 style={{ margin: "12px 0 6px" }}>0</h2>
-            <div style={{ color: "#38bdf8" }}>News Engine</div>
+            <h2 style={{ margin: "12px 0 6px" }}>{topNews.score}/10</h2>
+            <div style={{ color: "#38bdf8" }}>{topNews.symbol} — {topNews.impact}</div>
+            <div style={{ color: "#94a3b8", marginTop: "8px" }}>{topNews.title}</div>
           </section>
         </div>
       </div>
