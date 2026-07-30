@@ -1,4 +1,6 @@
 import type {
+  CandleInterval,
+  MarketCandle,
   MarketDataProvider,
   MarketQuote,
 } from "./market-data-provider";
@@ -20,6 +22,21 @@ type MassiveSnapshotResponse = {
 
 export class MassiveMarketDataProvider implements MarketDataProvider {
   constructor(private readonly apiKey: string) {}
+
+
+  async getCandles(
+    symbol: string,
+    interval: CandleInterval,
+    from: string,
+    to: string,
+  ): Promise<MarketCandle[]> {
+    void symbol;
+    void interval;
+    void from;
+    void to;
+
+    return [];
+  }
 
   async getQuote(symbol: string): Promise<MarketQuote> {
     if (!this.apiKey) {
