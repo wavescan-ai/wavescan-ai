@@ -11,7 +11,16 @@ export default async function Dashboard() {
   const liveTslaQuote = marketDataProvider
     ? await marketDataProvider.getQuote("TSLA").catch(() => null)
     : null;
-  const dataSourceLabel = liveTslaQuote ? "Massive متصل" : "بيانات تجريبية";
+  const liveTslaCandles = marketDataProvider
+    ? await marketDataProvider
+        .getCandles("TSLA", "30m", "2026-07-01", "2026-07-30")
+        .catch(() => [])
+    : [];
+
+  const dataSourceLabel =
+    liveTslaQuote && liveTslaCandles.length > 0
+      ? "Massive متصل"
+      : "بيانات تجريبية";
   const opportunities = rankOpportunities(mockMarketData);
   const topNews = [...mockNews].sort((a, b) => b.score - a.score)[0];
 
