@@ -1,11 +1,14 @@
 import { rankOpportunities } from "@/lib/opportunity-engine";
 import { mockMarketData } from "@/lib/mock-market-data";
 import { mockNews } from "@/lib/mock-news-data";
+import { getMarketDataProvider } from "@/lib/get-market-data-provider";
 
 
 
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const marketDataProvider = getMarketDataProvider();
+  void marketDataProvider;
   const opportunities = rankOpportunities(mockMarketData);
   const topNews = [...mockNews].sort((a, b) => b.score - a.score)[0];
 
