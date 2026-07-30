@@ -11,7 +11,7 @@ export default async function Dashboard() {
   const liveTslaQuote = marketDataProvider
     ? await marketDataProvider.getQuote("TSLA").catch(() => null)
     : null;
-  void liveTslaQuote;
+  const dataSourceLabel = liveTslaQuote ? "Massive متصل" : "بيانات تجريبية";
   const opportunities = rankOpportunities(mockMarketData);
   const topNews = [...mockNews].sort((a, b) => b.score - a.score)[0];
 
@@ -31,8 +31,11 @@ export default async function Dashboard() {
           لوحة تحكم WaveScan AI
         </h1>
 
-        <p style={{ color: "#94a3b8", marginBottom: "28px" }}>
+        <p style={{ color: "#94a3b8", marginBottom: "8px" }}>
           ملخص السوق وأهم الفرص والتنبيهات
+        </p>
+        <p style={{ color: "#38bdf8", marginBottom: "28px" }}>
+          مصدر البيانات: {dataSourceLabel}
         </p>
 
         <div
