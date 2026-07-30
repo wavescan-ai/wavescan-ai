@@ -8,7 +8,10 @@ import { getMarketDataProvider } from "@/lib/get-market-data-provider";
 
 export default async function Dashboard() {
   const marketDataProvider = getMarketDataProvider();
-  void marketDataProvider;
+  const liveTslaQuote = marketDataProvider
+    ? await marketDataProvider.getQuote("TSLA").catch(() => null)
+    : null;
+  void liveTslaQuote;
   const opportunities = rankOpportunities(mockMarketData);
   const topNews = [...mockNews].sort((a, b) => b.score - a.score)[0];
 
