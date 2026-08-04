@@ -96,6 +96,31 @@ export default async function Dashboard() {
             <div style={{ color: "#38bdf8" }}>
               WaveScore: {item.score}% — {item.reasons.join(" + ")}
             </div>
+
+              <div
+                style={{
+                  marginTop: "12px",
+                  fontWeight: 700,
+                  color:
+                    item.windowStatus === "فرصة ممتازة"
+                      ? "#22c55e"
+                      : item.windowStatus === "بدأت القوة تضعف"
+                        ? "#f59e0b"
+                        : "#ef4444",
+                }}
+              >
+                نافذة الفرصة: {item.windowStatus}
+              </div>
+
+              <div
+                style={{
+                  marginTop: "6px",
+                  color: "#94a3b8",
+                  lineHeight: 1.7,
+                }}
+              >
+                {item.windowExplanation}
+              </div>
           </section>
         ))}
 
