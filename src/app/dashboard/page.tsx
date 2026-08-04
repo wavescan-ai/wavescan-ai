@@ -2,6 +2,7 @@ import { rankOpportunities } from "@/lib/opportunity-engine";
 import { mockMarketData } from "@/lib/mock-market-data";
 import { mockNews } from "@/lib/mock-news-data";
 import { getMarketDataProvider } from "@/lib/get-market-data-provider";
+import { buildOpportunityInput } from "@/lib/build-opportunity-input";
 
 
 
@@ -21,7 +22,25 @@ export default async function Dashboard() {
     liveTslaQuote && liveTslaCandles.length > 0
       ? "Massive متصل"
       : "بيانات تجريبية";
-  const opportunities = rankOpportunities(mockMarketData);
+  const liveTslaInput =
+    liveTslaCandles.length > 0
+      ? buildOpportunityInput("TSLA", liveTslaCandles, {
+          elliottScore: 0,
+          candleScore: 0,
+          newsScore: 0,
+          sectorScore: 0,
+          riskScore: 0,
+        })
+      : null;
+
+  const opportunityInputs = liveTslaInput
+    ? [
+        liveTslaInput,
+        ...mockMarketData.filter((item) => item.symbol !== "TSLA"),
+      ]
+    : mockMarketData;
+
+  const opportunities = rankOpportunities(opportunityInputs);
   const topNews = [...mockNews].sort((a, b) => b.score - a.score)[0];
 
   return (

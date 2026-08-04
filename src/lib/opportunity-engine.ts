@@ -20,11 +20,29 @@ export type OpportunityInput = {
 export function calculateOpportunityScore(input: OpportunityInput) {
   const reasons: string[] = [];
 
+  const trendScore =
+    (input.priceAboveEma10 ? 6 : 0) +
+    (input.priceAboveMa20 ? 5 : 0) +
+    (input.priceAboveMa50 ? 4 : 0);
+
+  const momentumScore =
+    (input.macdBullish ? 6 : 0) +
+    (input.rsi >= 50 && input.rsi <= 70 ? 5 : 0) +
+    (input.rsi > 70 && input.rsi <= 80 ? 2 : 0);
+
+  const liquidityScore =
+    input.volumeRatio >= 2 ? 8 :
+    input.volumeRatio >= 1.5 ? 6 :
+    input.volumeRatio >= 1.2 ? 4 : 0;
+
+  const breakoutScore = input.breakout ? 5 : 0;
+
   const score =
-    input.trendScore +
+    trendScore +
     input.elliottScore +
-    input.liquidityScore +
-    input.momentumScore +
+    liquidityScore +
+    momentumScore +
+    breakoutScore +
     input.candleScore +
     input.newsScore +
     input.sectorScore -
