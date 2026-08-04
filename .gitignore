@@ -45,3 +45,10 @@ next-env.d.ts
 *.backup*
 *.backup.*
 *.before-*.tsx
+
+/src/generated/prisma
+
+# Local database and environment
+.env
+*.db
+*.db-journal

@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model WaveScoreHistory {
+  id                Int      @id @default(autoincrement())
+  symbol            String
+  score             Int
+  rsi               Float?
+  macd              Float?
+  macdSignal        Float?
+  trendScore        Int
+  momentumScore     Int
+  liquidityScore    Int
+  windowStatus      String
+  windowExplanation String
+  recordedAt        DateTime @default(now())
+
+  @@index([symbol, recordedAt])
+}

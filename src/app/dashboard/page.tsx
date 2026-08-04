@@ -3,6 +3,7 @@ import { mockMarketData } from "@/lib/mock-market-data";
 import { mockNews } from "@/lib/mock-news-data";
 import { getMarketDataProvider } from "@/lib/get-market-data-provider";
 import { buildOpportunityInput } from "@/lib/build-opportunity-input";
+import { saveWaveScoreHistory } from "@/lib/wave-score-history";
 
 
 
@@ -41,6 +42,32 @@ export default async function Dashboard() {
     : mockMarketData;
 
   const opportunities = rankOpportunities(opportunityInputs);
+
+  const liveTslaOpportunity = liveTslaInput
+    ? opportunities.find((item) => item.symbol === "TSLA")
+    : undefined;
+
+  const opportunityToSave = liveTslaOpportunity ?? opportunities[0];
+  const inputToSave =
+    opportunityInputs.find(
+      (item) => item.symbol === opportunityToSave?.symbol,
+    ) ?? null;
+
+  if (opportunityToSave && inputToSave) {
+    await saveWaveScoreHistory({
+      symbol: opportunityToSave.symbol,
+      score: opportunityToSave.score,
+      rsi: inputToSave.rsi,
+      macd: inputToSave.macd,
+      macdSignal: inputToSave.macdSignal,
+      trendScore: opportunityToSave.trendScore,
+      momentumScore: opportunityToSave.momentumScore,
+      liquidityScore: opportunityToSave.liquidityScore,
+      windowStatus: opportunityToSave.windowStatus,
+      windowExplanation: opportunityToSave.windowExplanation,
+    });
+  }
+
   const topNews = [...mockNews].sort((a, b) => b.score - a.score)[0];
 
   return (

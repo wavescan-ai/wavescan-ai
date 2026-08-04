@@ -5,6 +5,8 @@ export type OpportunityInput = {
   priceAboveMa50: boolean;
   macdBullish: boolean;
   rsi: number;
+  macd?: number | null;
+  macdSignal?: number | null;
   volumeRatio: number;
   breakout: boolean;
   trendScore: number;
@@ -103,6 +105,9 @@ export function calculateOpportunityScore(input: OpportunityInput) {
     reasons,
     windowStatus: opportunityWindow.status,
     windowExplanation: opportunityWindow.explanation,
+    trendScore,
+    momentumScore,
+    liquidityScore,
   };
 }
 

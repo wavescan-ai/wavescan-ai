@@ -59,6 +59,8 @@ export function buildOpportunityInput(
       indicators.macdSignal !== null &&
       indicators.macd > indicators.macdSignal,
     rsi: indicators.rsi14 ?? 50,
+    macd: indicators.macd,
+    macdSignal: indicators.macdSignal,
     volumeRatio: calculateVolumeRatio(sorted),
     breakout: detectBreakout(sorted),
 
